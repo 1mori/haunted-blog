@@ -3,16 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  # Eメール、パスワード、ニックネームが有効な状態であること
-  it 'is valid with a email, password, and nickname' do
-    user = User.new(
+  subject do
+    described_class.new(
       email: 'test@example.com',
       password: 'password',
       password_confirmation: 'password',
       nickname: 'testuser'
     )
+  end
 
-    expect(user).to be_valid
+  # Eメール、パスワード、ニックネームが有効な状態であること
+  it 'is valid with a email, password, and nickname' do
+    expect(subject).to be_valid
   end
 
   # Eメールがなければ無効な状態であること
