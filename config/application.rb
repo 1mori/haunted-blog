@@ -20,5 +20,16 @@ module HauntedBlog
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.time_zone = 'Tokyo'
+
+    Dir[Rails.root.join('lib', '**/')].each do |dir|
+      unless dir.match(/assets|tasks/)
+        config.autoload_paths << dir
+      end
+    end
+
+    config.generators do |g|
+      g.test_framework :rspec, fixtures: false, view_specs: false, helper_specs: false, routing_specs: false
+      g.factory_bot false
+    end
   end
 end
