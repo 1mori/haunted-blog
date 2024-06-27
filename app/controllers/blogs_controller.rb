@@ -56,7 +56,7 @@ class BlogsController < ApplicationController
   end
 
   def match_login_user
-    raise ActiveRecord::RecordNotFound if @blog.user_id != current_user.id
+    @blog = Blog.find_by!(id: params[:id], user_id: current_user.id)
   end
 
   def show_secret
