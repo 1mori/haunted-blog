@@ -60,6 +60,10 @@ class BlogsController < ApplicationController
   end
 
   def show_secret
-    raise ActiveRecord::RecordNotFound if @blog.secret && (current_user.nil? || @blog.user_id != current_user.id)
+    @blog = if current_user
+              Blog.where(id: params[:id]).where('secret = ? OR user_id = ?', false, current_user.id).first!
+            else
+              Blog.find_by!(id: params[:id], secret: false)
+            end
   end
 end
