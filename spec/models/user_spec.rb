@@ -19,7 +19,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  content 'パスワードがない場合' do
+  context 'パスワードがない場合' do
     let(:incorrect_password_user) { described_class.new(email: 'test@example.com', password: nil, password_confirmation: 'password', nickname: 'testuser') }
 
     it '作成は無効であること' do
