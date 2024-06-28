@@ -65,6 +65,7 @@ group :development do
   gem 'rubocop-fjord', require: false
   gem 'rubocop-rails', require: false
   # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem 'rubocop-rspec', require: false
   gem 'web-console'
 end
 
