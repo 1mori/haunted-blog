@@ -9,18 +9,18 @@ RSpec.describe User, type: :model do
   end
 
   it 'Eメールがなければ無効であること' do
-    subject.email = nil
-    expect(subject).to be_invalid
+    user = described_class.new(email: nil, password: 'password', password_confirmation: 'password', nickname: 'testuser')
+    expect(user.valid?).to be false
   end
 
   it 'パスワードがなければ無効であること' do
-    subject.password = nil
-    expect(subject).to be_invalid
+    user = described_class.new(email: 'test@example.com', password: nil, password_confirmation: 'password', nickname: 'testuser')
+    expect(user.valid?).to be false
   end
 
   it '確認のパスワードが一致しなければ無効であること' do
-    subject.password_confirmation = 'pussword'
-    expect(subject).to be_invalid
+    user = described_class.new(email: 'test@example.com', password: 'password', password_confirmation: 'wrong_password', nickname: 'testuser')
+    expect(user.valid?).to be false
   end
 
   it '重複したニックネームは無効であること' do
