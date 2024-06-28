@@ -4,46 +4,42 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   context 'Eメール、パスワード、ニックネームがある場合' do
-    let(:correct_user) { described_class.new(email: 'test@example.com', password: 'password', password_confirmation: 'password', nickname: 'testuser') }
+    user = FactoryBot.build(:user)
 
     it '作成が有効であること' do
-      expect(correct_user.valid?).to be true
+      expect(user.valid?).to be true
     end
   end
 
   context 'Eメールがない場合' do
-    let(:incorrect_email_user) { described_class.new(email: nil, password: 'password', password_confirmation: 'password', nickname: 'testuser') }
+    user = FactoryBot.build(:user, email: nil)
 
     it '作成は無効であること' do
-      expect(incorrect_email_user.valid?).to be false
+      expect(user.valid?).to be false
     end
   end
 
   context 'パスワードがない場合' do
-    let(:incorrect_password_user) { described_class.new(email: 'test@example.com', password: nil, password_confirmation: 'password', nickname: 'testuser') }
+    user = FactoryBot.build(:user, password: nil)
 
     it '作成は無効であること' do
-      expect(incorrect_password_user.valid?).to be false
+      expect(user.valid?).to be false
     end
   end
 
   context '確認のパスワードが一致しない場合' do
-    let(:incorrect_confirm_password_user) do
-      described_class.new(email: 'test@example.com', password: 'password', password_confirmation: 'wrong_password', nickname: 'testuser')
-    end
+    user = FactoryBot.build(:user, password_confirmation: 'wrong_password')
 
     it '作成は無効であること' do
-      expect(incorrect_confirm_password_user.valid?).to be false
+      expect(user.valid?).to be false
     end
   end
 
   context '2人以上のユーザーが存在する場合' do
-    let(:duplicated_nickname_user) do
-      described_class.new(email: 'test2@example.com', password: 'password', password_confirmation: 'password', nickname: 'testuser')
-    end
+    duplicated_nickname_user = FactoryBot.build(:user, email: 'test2@example.com')
 
     before do
-      described_class.create!(email: 'test@example.com', password: 'password', password_confirmation: 'password', nickname: 'testuser')
+      FactoryBot.create(:user)
     end
 
     it '重複したニックネームは無効であること' do
