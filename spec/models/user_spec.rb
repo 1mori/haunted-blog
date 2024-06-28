@@ -24,13 +24,9 @@ RSpec.describe User, type: :model do
   end
 
   it '重複したニックネームは無効であること' do
-    described_class.create!(
-      email: 'test2@example.com',
-      password: 'password',
-      password_confirmation: 'password',
-      nickname: 'testuser'
-    )
+    described_class.create!(email: 'test@example.com', password: 'password', password_confirmation: 'password', nickname: 'testuser')
+    duplicated_user = described_class.new(email: 'test2@example.com', password: 'password', password_confirmation: 'password', nickname: 'testuser')
 
-    expect(subject).to be_invalid
+    expect(duplicated_user.valid?).to be false
   end
 end
