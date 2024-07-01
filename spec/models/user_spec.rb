@@ -36,11 +36,9 @@ RSpec.describe User, type: :model do
   end
 
   context '2人以上のユーザーが存在する場合' do
-    let(:user) { build(:user, email: 'test2@example.com') }
+    before { create(:user) }
 
-    before do
-      create(:user)
-    end
+    let(:user) { build(:user, email: 'test2@example.com') }
 
     it '重複したニックネームは無効であること' do
       expect(user.valid?).to be false
