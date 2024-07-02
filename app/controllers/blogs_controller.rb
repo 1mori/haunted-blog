@@ -3,7 +3,6 @@
 class BlogsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
 
-  before_action :set_blog, only: %i[show edit update destroy]
   before_action :match_login_user, only: %i[edit update destroy]
   before_action :show_secret, only: %i[show]
 
@@ -44,10 +43,6 @@ class BlogsController < ApplicationController
   end
 
   private
-
-  def set_blog
-    @blog = Blog.find(params[:id])
-  end
 
   def blog_params
     allow_params = %i[title content secret]
