@@ -3,7 +3,7 @@
 class BlogsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
 
-  before_action :match_login_user, only: %i[edit update destroy]
+  before_action :set_blog, only: %i[edit update destroy]
   before_action :show_secret, only: %i[show]
 
   def index
@@ -50,7 +50,7 @@ class BlogsController < ApplicationController
     params.require(:blog).permit(*allowed_params)
   end
 
-  def match_login_user
+  def set_blog
     @blog = Blog.find_by!(id: params[:id], user_id: current_user.id)
   end
 
