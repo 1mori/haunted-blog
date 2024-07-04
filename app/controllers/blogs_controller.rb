@@ -10,7 +10,7 @@ class BlogsController < ApplicationController
   end
 
   def show
-    query = Blog.where(secret: false)
+    query = Blog.published
     query = query.or(Blog.where(user_id: current_user.id)) if current_user
 
     @blog = query.find(params[:id])
