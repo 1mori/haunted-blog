@@ -2,3 +2,9 @@ inherit_gem:
   rubocop-fjord:
     - "config/rubocop.yml"
     - "config/rails.yml"
+
+require: rubocop-rspec
+
+# 日本語だと「〜の場合」になるので suffix でないと対応できない
+RSpec/ContextWording:
+  Enabled: false
